@@ -29,7 +29,21 @@ export default {
                 'A S D F G H J K L',
                 '{enter} Z X C V B N M {bksp}',
             ]
-        }
+        },
+        buttonTheme: [
+            {
+                class: 'button-present',
+                buttons: 'U G',
+            },   
+             {
+                class: 'button-absent',
+                buttons: 'Z X C I O P',
+            },  
+            {
+                class: 'button-correct',
+                buttons: 'S',
+            },         
+        ],
     });
   },
   methods: {
@@ -60,5 +74,21 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
+
+.button-present {
+    background-color: goldenrod !important;
+    color: black !important;
+}
+
+.button-correct {
+    background-color: green !important;
+    color: white !important;
+}
+
+.button-absent {
+    background-color: grey !important;
+    color: white !important;
+}
+
 </style>

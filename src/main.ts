@@ -1,4 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 
-createApp(App).mount('#app')
+//@ts-ignore
+import Toaster from '@meforma/vue-toaster';
+
+createApp(App).use(Toaster).mount('#app')
