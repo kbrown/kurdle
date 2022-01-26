@@ -4,6 +4,7 @@
 
 <script>
 import Keyboard from "simple-keyboard";
+import inputMask from "simple-keyboard-input-mask";
 import "simple-keyboard/build/css/index.css";
 export default {
   name: "Keyboard",
@@ -14,15 +15,40 @@ export default {
     },
     input: {
       type: String
+    },
+    present: {
+      type: String
+    },
+    absent: {
+      type: String  
+    },
+    correct: {
+      type: String
     }
   },
   data: () => ({
-    keyboard: null
+    keyboard: null,
+    theme: "hg-theme-default kurdle" //TODO: doesn't seem to be applied :-(
   }),
   mounted() {
     this.keyboard = new Keyboard(this.keyboardClass, {
         onChange: this.onChange,
         onKeyPress: this.onKeyPress,
+        modules: [inputMask],
+        onModulesLoaded: () => {
+            console.log("Module loaded!");
+        },
+        inputMask: {
+            "default": {
+            mask: 'XXXXX',
+            regex: /^[A-Z]{0,5}$/
+            }
+        },
+
+        display: {
+            '{enter}': 'ENTER',
+            '{bksp}': '\u232B',
+        },
         layout: {
             'default': [
                 'Q W E R T Y U I O P',
@@ -52,17 +78,8 @@ export default {
     },
     onKeyPress(button) {
       this.$emit("onKeyPress", button);
-      /**
-       * If you want to handle the shift and caps lock buttons
-       */
-      if (button === "{shift}" || button === "{lock}") this.handleShift();
     },
     handleShift() {
-      let currentLayout = this.keyboard.options.layoutName;
-      let shiftToggle = currentLayout === "default" ? "shift" : "default";
-      this.keyboard.setOptions({
-        layoutName: shiftToggle
-      });
     }
   },
   watch: {
@@ -90,5 +107,37 @@ export default {
     background-color: grey !important;
     color: white !important;
 }
+
+
+
+/*
+  Theme: kurdle
+*/
+.simple-keyboard.kurdle {
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 0;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.simple-keyboard.kurdle .hg-button {
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+}
+
+.simple-keyboard.kurdle .hg-button:active {
+  background: #1c4995;
+  color: white;
+}
+
+#root .simple-keyboard.kurdle{
+  background: #1c4995;
+}
+
+
 
 </style>

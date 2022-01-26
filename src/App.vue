@@ -14,7 +14,8 @@
       @input="onInputChange"
       placeholder="Tap on the virtual keyboard to start"
     >
-    <Keyboard @onChange="onChange" @onKeyPress="onKeyPress" :input="input"/>
+    <Keyboard @onChange="onChange" @onKeyPress="onKeyPress" :input="input"
+        :present="present" :absent="absent" :correct="correct" :theme="theme"/>
   </div>
 </template>
 
@@ -55,6 +56,7 @@ export const evaluate = (word, guess) => {
 
 export default {
   name: "App",
+  props: ['evaluation'],
   components: {
     Guess,
     //Board,
@@ -62,6 +64,10 @@ export default {
   },
   data: () => ({
     word: "sugar",
+    present: "U",
+    absent: "XJR",
+    correct: "S",
+    theme: "hg-theme-default kurdle", //TODO: why here and not in Keyboard.vue?
     candidateWordList: ["horse", "stint", "spurn", "sugar", "sorry", "start", "chimp", "glued"],
     input: "",
     cellIdx: 0,
@@ -146,5 +152,16 @@ export default {
     gap: 4rem;
     position: relative;
 }
+
+/*
+  Theme: kurdle //TODO: DRY
+*/
+.simple-keyboard.kurdle {
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 0;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
 
 </style>
