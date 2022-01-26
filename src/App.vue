@@ -1,5 +1,13 @@
 <template>
   <div id="app">
+     <Guess
+            v-for="(guess, i) in guesses"
+            v-model="guesses[`${i}`]"
+            :key="`guess-${i}`"
+            :label="`guess-${i}`"
+            :value="guess"
+        />
+
     <Board />
     <input
       :value="input"
@@ -16,6 +24,7 @@
 
 import Keyboard from "./components/Keyboard.vue";
 import Board from './components/Board.vue';
+import Guess from './components/Guess.vue';
 
 import "./App.css";
 
@@ -32,30 +41,38 @@ import "./App.css";
 export default {
   name: "App",
   components: {
+    Guess,
     Board,
     Keyboard
   },
   data: () => ({
     input: "",
     cellIdx: 0,
-    rowIdx: 0,
+    guessIndex: 0,
     guesses: [
-      ['','','','',''],
-      ['','','','',''],
-      ['','','','',''],
-      ['','','','',''],
-      ['','','','',''],
-      ['','','','',''],
+      "Kevin",
+      "Wasnt",
+      "Heres",
+      "",
+      "",
+      "",
     ]
   }),
   methods: {
     onChange(input) {
       this.input = input;
-      this.guesses[this.rowIdx][this.cellIdx] = input;
       this.cellIdx++;
+    },
+    onEnter(){
+      this.guesses[this.guessIndex]=this.input;
+      this.input="";
+      this.guessIndex++;
     },
     onKeyPress(button) {
       console.log("button", button);
+      if (button === "{enter}"){
+        this.onEnter()
+      }
     },
     onInputChange(input) {
       this.input = input.target.value;

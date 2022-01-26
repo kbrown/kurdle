@@ -1,36 +1,21 @@
 <template>
     <div class="board">
-        <Square
-            v-for="(square, i) in guesses"
-            v-model="guesses[`${cellIdx + 1}:${rowIdx + 1}`]"
-            :key="`square-${i}`"
-            :label="`square-${i}`"
-            :value="square"
-            @click="markSquare(i)"
+        <Guess
+            v-for="(row, i) in guesses"
+            v-model="guesses[`${rowIdx}`]"
+            :key="`row-${i}`"
+            :label="`row-${i}`"
+            :value="guess"
         />
     </div>
 </template>
 
 <script lang="ts">
-import Square from './Square.vue';
+import Guess from './Guess.vue';
 import { defineComponent } from 'vue';
-import { useBoard } from '../composables/useBoard';
-import { useCalculateWinner } from '../composables/useCalculateWinner';
 export default defineComponent({
     components: {
-        Square,
-    },
-    setup() {
-        const { board, playerValue, markSquare, reset } = useBoard();
-        const { calculateWinner } = useCalculateWinner(board);
-        return {
-            board,
-            playerValue,
-            markSquare,
-            calculateWinner,
-            //boardRef,
-            reset,
-        };
+        Guess,
     },
 });
 </script>
